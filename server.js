@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 
 const colorService = require('./services/color.service')
 const app = express()
+const http = require('http').createServer(app)
 
 // Config the Express App
 app.use(express.static('public'))
@@ -16,6 +17,9 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions))
+
+const { setupSocketAPI, broadcastVote } = require('./services/socket.service')
+setupSocketAPI(http)
 
 // Colors REST API
 app.get('/api/color', async (req, res) => {
@@ -34,46 +38,10 @@ app.post('/api/color/:colorId', async (req, res) => {
     const { colorId } = req.params
     try {
         const savedColor = await colorService.addVote(colorId)
+        broadcastVote(savedColor)
         res.send(savedColor)
     } catch (err) { }
 })
-
-app.post('/api/color', async (req, res) => {
-
-    const color = req.body
-    try {
-        const savedColor = await colorService.save(color)
-        res.send(savedColor)
-    } catch (err) { }
-})
-
-app.put('/api/color/:colorId', async (req, res) => {
-
-    const color = req.body
-    try {
-        const savedColor = await colorService.save(color)
-        res.send(savedColor)
-    } catch (err) { }
-})
-
-app.get('/api/color/:colorId', async (req, res) => {
-    const { colorId } = req.params
-
-    try {
-        const color = await colorService.getById(colorId)
-        res.send(color)
-    } catch (err) { }
-})
-
-app.delete('/api/color/:colorId', async (req, res) => {
-
-    const { colorId } = req.params
-    try {
-        await colorService.remove(colorId)
-        res.send('Removed Succesfully')
-    } catch (err) { }
-})
-
 
 // Last fallback
 app.get('/**', (req, res) => {
@@ -83,6 +51,6 @@ app.get('/**', (req, res) => {
 
 const port = process.env.PORT || 3030
 
-app.listen(port, () => {
+http.listen(port, () => {
     console.log(`Server is ready at ${port}`)
 })

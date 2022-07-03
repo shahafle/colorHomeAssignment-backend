@@ -3,24 +3,42 @@
     "id": "1",
     "name": "green",
     "hex": "#008000",
-    "votes": 19
+    "votes": 39
   },
   {
     "id": "2",
     "name": "yellow",
     "hex": "#ffff00",
-    "votes": 102
+    "votes": 101
   },
   {
     "id": "3",
     "name": "red",
     "hex": "#ff0000",
-    "votes": 10
+    "votes": 67
+  },
+  {
+    "id": "5",
+    "name": "purple",
+    "hex": "#6e326e",
+    "votes": 41
   },
   {
     "id": "4",
     "name": "blue",
     "hex": "#0000ff",
-    "votes": 15
+    "votes": 16
+  },
+  {
+    "id": "6",
+    "name": "gray",
+    "hex": "#323232",
+    "votes": 29
+  },
+  {
+    "id": "7",
+    "name": "pink",
+    "hex": "#eb8e9d",
+    "votes": 20
   }
 ]
