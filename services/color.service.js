@@ -6,9 +6,7 @@ const PAGE_SIZE = 5
 module.exports = {
     query,
     getById,
-    remove,
     addVote,
-    save
 }
 
 
@@ -29,20 +27,6 @@ function getById(colorId) {
     return Promise.resolve(color)
 }
 
-async function save(color) {
-    if (color.id) {
-        const idx = gColors.findIndex(currColor => currColor.id === color.id)
-        gColors.splice(idx, 1, color)
-    } else {
-        color.id = utilService.makeId()
-        color.createdAt = Date.now()
-        gColors.push(color)
-    }
-
-    await _saveColorsToFile()
-    return color
-}
-
 async function addVote(colorId) {
     const color = await getById(colorId)
     color.votes++
@@ -51,13 +35,6 @@ async function addVote(colorId) {
     await _saveColorsToFile()
     return color
 }
-
-function remove(colorId) {
-    const idx = gColors.findIndex(color => color.id === colorId)
-    gColors.splice(idx, 1)
-    return _saveColorsToFile()
-}
-
 
 function _saveColorsToFile() {
     return new Promise((resolve, reject) => {

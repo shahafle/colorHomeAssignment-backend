@@ -3,7 +3,7 @@
     "id": "1",
     "name": "green",
     "hex": "#008000",
-    "votes": 39
+    "votes": 45
   },
   {
     "id": "2",
@@ -15,7 +15,7 @@
     "id": "3",
     "name": "red",
     "hex": "#ff0000",
-    "votes": 67
+    "votes": 69
   },
   {
     "id": "5",
@@ -39,6 +39,12 @@
     "id": "7",
     "name": "pink",
     "hex": "#eb8e9d",
+    "votes": 20
+  },
+  {
+    "id": "7",
+    "name": "orange",
+    "hex": "#e69808",
     "votes": 20
   }
 ]
