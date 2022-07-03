@@ -1,0 +1,15 @@
+{
+  "name": "proj-node-server",
+  "description": "",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "nodemon --ignore \"./data\" server.js"
+  },
+  "author": "Shahaf Levi",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cryptr": "^6.0.3",
+    "express": "^4.18.1"
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "green",
+    "hex": "#008000",
+    "votes": 3
+  },
+  {
+    "id": 2,
+    "name": "yellow",
+    "hex": "#ffff00",
+    "votes": 20
+  },
+  {
+    "id": 3,
+    "name": "red",
+    "hex": "#ff0000",
+    "votes": 1
+  },
+  {
+    "id": 4,
+    "name": "blue",
+    "hex": "#0000ff",
+    "votes": 10
+  }
+]
