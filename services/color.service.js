@@ -1,7 +1,6 @@
 const fs = require('fs')
 const gColors = require('../data/color.json')
 
-const PAGE_SIZE = 5
 module.exports = {
     query,
     getById,
@@ -9,16 +8,8 @@ module.exports = {
 }
 
 
-function query(filterBy = { txt: '' }) {
-    const regex = new RegExp(filterBy.txt, 'i')
-    var colors = gColors.filter(color => regex.test(color.name) || regex.test(color.hex))
-
-    if (filterBy.pageIdx !== undefined) {
-        const startIdx = filterBy.pageIdx * PAGE_SIZE;
-        colors = colors.slice(startIdx, startIdx + PAGE_SIZE)
-    }
-
-    return Promise.resolve(colors)
+function query() {
+    return Promise.resolve(gColors)
 }
 
 function getById(colorId) {

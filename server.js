@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const cors = require('cors')
-const cookieParser = require('cookie-parser')
 
 const colorService = require('./services/color.service')
 const app = express()
@@ -9,7 +8,6 @@ const http = require('http').createServer(app)
 
 // Config the Express App
 app.use(express.static('public'))
-app.use(cookieParser())
 app.use(express.json())
 
 const corsOptions = {
@@ -23,10 +21,8 @@ setupSocketAPI(http)
 
 // Colors REST API
 app.get('/api/color', async (req, res) => {
-    const filterBy = { txt: req.query.txt || '' }
-    if (req.query.pageIdx) filterBy.pageIdx = req.query.pageIdx
     try {
-        const colors = await colorService.query(filterBy)
+        const colors = await colorService.query()
         res.send(colors)
     } catch (err) {
 
