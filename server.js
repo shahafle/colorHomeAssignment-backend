@@ -21,7 +21,6 @@ app.use(cors(corsOptions))
 app.get('/api/color', async (req, res) => {
     const filterBy = { txt: req.query.txt || '' }
     if (req.query.pageIdx) filterBy.pageIdx = req.query.pageIdx
-    if (req.query.userId) filterBy.userId = req.query.userId
     try {
         const colors = await colorService.query(filterBy)
         res.send(colors)
@@ -30,10 +29,18 @@ app.get('/api/color', async (req, res) => {
     }
 })
 
+app.post('/api/color/:colorId', async (req, res) => {
+
+    const { colorId } = req.params
+    try {
+        const savedColor = await colorService.addVote(colorId)
+        res.send(savedColor)
+    } catch (err) { }
+})
+
 app.post('/api/color', async (req, res) => {
 
     const color = req.body
-    color.owner = loggedinUser
     try {
         const savedColor = await colorService.save(color)
         res.send(savedColor)
@@ -44,7 +51,7 @@ app.put('/api/color/:colorId', async (req, res) => {
 
     const color = req.body
     try {
-        const savedColor = await colorService.save(color, loggedinUser)
+        const savedColor = await colorService.save(color)
         res.send(savedColor)
     } catch (err) { }
 })
@@ -62,7 +69,7 @@ app.delete('/api/color/:colorId', async (req, res) => {
 
     const { colorId } = req.params
     try {
-        await colorService.remove(colorId, loggedinUser)
+        await colorService.remove(colorId)
         res.send('Removed Succesfully')
     } catch (err) { }
 })

@@ -7,6 +7,7 @@ module.exports = {
     query,
     getById,
     remove,
+    addVote,
     save
 }
 
@@ -24,19 +25,16 @@ function query(filterBy = { txt: '' }) {
 }
 
 function getById(colorId) {
-    const color = gColors.find(color => color._id === colorId)
+    const color = gColors.find(color => color.id === colorId)
     return Promise.resolve(color)
 }
 
-async function save(color, loggedinUser) {
-    if (color._id) {
-        const idx = gColors.findIndex(currColor => currColor._id === color._id)
-        if (gColors[idx].owner._id !== loggedinUser._id) {
-            return Promise.reject('Not your Color')
-        }
+async function save(color) {
+    if (color.id) {
+        const idx = gColors.findIndex(currColor => currColor.id === color.id)
         gColors.splice(idx, 1, color)
     } else {
-        color._id = utilService.makeId()
+        color.id = utilService.makeId()
         color.createdAt = Date.now()
         gColors.push(color)
     }
@@ -45,11 +43,17 @@ async function save(color, loggedinUser) {
     return color
 }
 
-function remove(colorId, loggedinUser) {
-    const idx = gColors.findIndex(color => color._id === colorId)
-    if (!loggedinUser.isAdmin && gColors[idx].owner._id !== loggedinUser._id) {
-        return Promise.reject('Not your Color')
-    }
+async function addVote(colorId) {
+    const color = await getById(colorId)
+    color.votes++
+    const idx = gColors.findIndex(currColor => currColor.id === color.id)
+    gColors.splice(idx, 1, color)
+    await _saveColorsToFile()
+    return color
+}
+
+function remove(colorId) {
+    const idx = gColors.findIndex(color => color.id === colorId)
     gColors.splice(idx, 1)
     return _saveColorsToFile()
 }
