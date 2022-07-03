@@ -1,5 +1,4 @@
 const fs = require('fs')
-const utilService = require('./util.service')
 const gColors = require('../data/color.json')
 
 const PAGE_SIZE = 5
